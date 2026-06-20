@@ -4,6 +4,11 @@
     "slug": "GymApp3",
     "version": "1.0.0",
     "orientation": "portrait",
+    "plugins": [
+  "@react-native-google-signin/google-signin",
+  "@react-native-firebase/app",
+  "@react-native-firebase/auth"
+    ],
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
@@ -16,11 +21,13 @@
       "supportsTablet": true
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.gymapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
