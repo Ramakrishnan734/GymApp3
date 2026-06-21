@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import firestore from '@react-native-firebase/firestore';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -17,7 +18,14 @@ const HomeScreen= ()=>{
     const [set,setset]=useState("");
     const [rep,setrep]=useState("");
     const [weight,setweight]=useState("");
-    function handleLogworkout()
+    useEffect(()=>{
+        const user= auth().currentUser;
+        firestore().collection('users').doc(user.uid).collection('workout').get().then(item=>{
+            const data=item.docs.map(doc=>doc.data());
+            setworkout(data);
+        });
+    },[]);
+  async  function handleLogworkout()
     {
         if(!exercise || !set || !rep )
         {
@@ -31,6 +39,8 @@ const HomeScreen= ()=>{
         rep:parseInt(rep),
        weight: weight ? `${weight} kg` : 'Bodyweight',
     }
+    const user =auth().currentUser;
+        await firestore().collection('users').doc(user.uid).collection('workout').add(entry);
     setworkout(prev=>[entry,...prev]);
     setexercise("");
     setset("");
