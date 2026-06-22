@@ -38,6 +38,7 @@ const HomeScreen= ({navigation})=>{
         set:parseInt(set),
         rep:parseInt(rep),
        weight: weight ? `${weight} kg` : 'Bodyweight',
+       date: new Date().toLocaleDateString(),
     }
     const user =auth().currentUser;
         await firestore().collection('users')
@@ -66,6 +67,9 @@ const HomeScreen= ({navigation})=>{
                     <Text style={styles.buttonText}>LOG OUT</Text>
                 </TouchableOpacity>
             </View>
+            <Button mode ="contained" onPress={() => navigation.navigate('Profile')}
+            style={{marginTop:16,marginBottom:20,backgroundColor:'#00FF7F'}}
+          >Profile </Button>
         
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
            

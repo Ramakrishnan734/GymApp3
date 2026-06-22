@@ -44,7 +44,7 @@ const Historyscreen=()=>{
             renderItem={({item})=>(
                 <View style={styles.form}>
                 <Text style={styles.workoutDetail}>
-                     {item.exercise} - {item.set} set * {item.rep} rep    {item.weight} 
+                     {item.exercise} - {item.set} set * {item.rep} rep    {item.weight} | {item.date}
                 </Text>
                 </View>
             )}
