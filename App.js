@@ -6,6 +6,7 @@ import { getAuth, onAuthStateChanged } from '@react-native-firebase/auth';
 import HomeScreen from './src/screens/homescreen';
 import LoginScreen from './src/screens/LoginScreen';
 import Signup from './src/screens/signupscreen';
+import History from './src/screens/historyscreen';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -24,7 +25,10 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false, contentStyle: { backgroundColor: '#0f0f0f' } }}>
         {user ?(
+          <>
           <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="History" component={History} />
+          </>
         ):(
           <>
         <Stack.Screen name="Login" component={LoginScreen} />

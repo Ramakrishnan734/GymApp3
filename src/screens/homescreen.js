@@ -12,7 +12,7 @@ import {
 import { TextInput, Button } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 
-const HomeScreen= ()=>{
+const HomeScreen= ({navigation})=>{
     const [workout,setworkout]=useState([]);
     const [exercise,setexercise]=useState("");
     const [set,setset]=useState("");
@@ -40,7 +40,10 @@ const HomeScreen= ()=>{
        weight: weight ? `${weight} kg` : 'Bodyweight',
     }
     const user =auth().currentUser;
-        await firestore().collection('users').doc(user.uid).collection('workout').add(entry);
+        await firestore().collection('users')
+        .doc(user.uid)
+        .collection('workout')
+        .add(entry);
     setworkout(prev=>[entry,...prev]);
     setexercise("");
     setset("");
@@ -55,15 +58,17 @@ const HomeScreen= ()=>{
     const streak= 7;
     const totalset=workout.reduce((sum,w)=> sum+w.set,0);
     return(
-        
-        <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
-            {/*heading*/}
+
+         <View style={{ flex:1 ,backgroundColor: '#0000FF', paddingHorizontal: 24, paddingTop: 20 }}>
             <View style={styles.heading}>
                 <Text style={styles.greeting}>Today's workout</Text>
                 <TouchableOpacity style={styles.button} onPress={handleLogout}>
                     <Text style={styles.buttonText}>LOG OUT</Text>
                 </TouchableOpacity>
             </View>
+        
+        <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+           
             {/* stats */}
             <View style={styles.statrow}>
                 <View style={styles.statcard}>
@@ -119,19 +124,31 @@ const HomeScreen= ()=>{
 
                 {/* */}
              {workout.length > 0 && (
+              
         <View style={styles.listSection}>
+            <>
           <Text style={styles.title}>Logged Today</Text>
           {workout.map(item => (
+            
             <View key={item.id} style={styles.workoutItem}>
               <Text style={styles.workoutName}>{item.exercise}</Text>
               <Text style={styles.workoutDetail}>
                 {item.set} sets * {item.rep} reps — {item.weight}
               </Text>
             </View>
+            
+            
           ))}
+          <Button mode ="contained" onPress={() => navigation.navigate('History')}
+            style={{marginTop:16,marginBottom:20}}
+          >Workout History</Button>
+          </>
         </View>
+        
+        
       )}    
         </ScrollView>
+        </View>
 
     );
 
@@ -139,8 +156,7 @@ const HomeScreen= ()=>{
 }
 const styles=StyleSheet.create({
    container:{
-        flex:1,
-        justifyContent:'center',
+        paddingBottom: 40,
         paddingHorizontal: 24,
         backgroundColor:'#0000FF',
     },
@@ -186,6 +202,7 @@ const styles=StyleSheet.create({
     },
     buttonText:{
         color:'#000000',
+        
     } ,
     statrow: {
     flexDirection: 'row',
@@ -230,7 +247,7 @@ const styles=StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: 14,
-    marginBottom: 8,
+    marginBottom:10,
   },
   workoutName: {
     fontSize: 15,
@@ -240,7 +257,7 @@ const styles=StyleSheet.create({
   workoutDetail: {
     fontSize: 13,
     color: '#666',
-    marginTop: 2,
+    marginTop:1,
   },
 
 }
