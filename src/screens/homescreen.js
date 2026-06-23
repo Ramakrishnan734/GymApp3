@@ -18,6 +18,7 @@ const HomeScreen= ({navigation})=>{
     const [set,setset]=useState("");
     const [rep,setrep]=useState("");
     const [weight,setweight]=useState("");
+    const [detail,setdetail]=useState([]);
     useEffect(()=>{
         const user= auth().currentUser;
         firestore().collection('users').doc(user.uid).collection('workout').get().then(item=>{
@@ -27,7 +28,7 @@ const HomeScreen= ({navigation})=>{
     },[]);
   async  function handleLogworkout()
     {
-        if(!exercise || !set || !rep )
+        if(!exercise || !set || setdetail.length ===0 )
         {
             Alert.alert("field missing ","please enter every field exercise,set,rep");
             return;
@@ -35,9 +36,8 @@ const HomeScreen= ({navigation})=>{
         const entry={
         id:Date.now().toString(),
         exercise,
+        setdetail:detail,
         set:parseInt(set),
-        rep:parseInt(rep),
-       weight: weight ? `${weight} kg` : 'Bodyweight',
        date: new Date().toLocaleDateString(),
     }
     const user =auth().currentUser;
@@ -51,25 +51,32 @@ const HomeScreen= ({navigation})=>{
     setrep("");
     setweight("");
     }
+    function handleSetChange(value)
+    {
+        setset(value);
+        const no=parseInt(value);
+        if(!isNaN(no) && no>0)
+        {
+            setdetail(Array.from({length:no},()=>({rep:'',weight:''})));
+        }
+        else
+        {
+            setdetail([]);
+        }
+    }
     
     function handleLogout()
     {
         auth().signOut();
     }
     const streak= 7;
-    const totalset=workout.reduce((sum,w)=> sum+w.set,0);
+    const totalset=workout.reduce((sum,w)=> sum+(w.set || 0),0);
     return(
 
          <View style={{ flex:1 ,backgroundColor: '#0000FF', paddingHorizontal: 24, paddingTop: 20 }}>
             <View style={styles.heading}>
                 <Text style={styles.greeting}>Today's workout</Text>
-                <TouchableOpacity style={styles.button} onPress={handleLogout}>
-                    <Text style={styles.buttonText}>LOG OUT</Text>
-                </TouchableOpacity>
             </View>
-            <Button mode ="contained" onPress={() => navigation.navigate('Profile')}
-            style={{marginTop:16,marginBottom:20,backgroundColor:'#00FF7F'}}
-          >Profile </Button>
         
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
            
@@ -103,29 +110,42 @@ const HomeScreen= ({navigation})=>{
                         style={styles.input}
                         label=" SET "
                         value={set}
-                        onChangeText={setset}
+                        onChangeText={handleSetChange}
                         keyboardType='numeric'
                     />
-                    <TextInput
-                        style={styles.input}
-                        label="REP"
-                        value={rep}
-                        onChangeText={setrep}
-                        keyboardType='numeric'
-                    />
-                    <TextInput
-                        style={styles.input}
-                        label=" WEIGHT "
-                        value={weight}
-                        onChangeText={setweight}
-                        keyboardType='numeric'
-                    />
+                    {detail.map((item,index)=>(
+                        <View key={index} style={styles.row}>
+                          <Text style={styles.title}> SET {index + 1}</Text> 
+                          <TextInput 
+                            label="Rep"
+                            value={item.rep}
+                            onChangeText={(value)=>{
+                                const updated =[...detail];
+                                updated[index].rep=value;
+                                setdetail(updated);
+                            }}
+                            keyboardType='numeric'
+                            style={[styles.input]}
+                            />
+                            <Text style={styles.title}> SET {index + 1}</Text> 
+                          <TextInput 
+                            label="Wt"
+                            value={item.weight}
+                            onChangeText={(value)=>{
+                                const updated =[...detail];
+                                updated[index].weight=value;
+                                setdetail(updated);
+                            }}
+                            keyboardType='numeric'
+                            style={[styles.input]}
+                            />
+                        </View>
+                    ))}
                     </View>
                     <Button  style={styles.Button} onPress={handleLogworkout}>
                 ADD EXERCISE
             </Button>
                 </View>
-
                 {/* */}
              {workout.length > 0 && (
               
@@ -133,19 +153,17 @@ const HomeScreen= ({navigation})=>{
             <>
           <Text style={styles.title}>Logged Today</Text>
           {workout.map(item => (
-            
             <View key={item.id} style={styles.workoutItem}>
               <Text style={styles.workoutName}>{item.exercise}</Text>
-              <Text style={styles.workoutDetail}>
-                {item.set} sets * {item.rep} reps — {item.weight}
+              {item.setdetail && item.setdetail.map((s,i)=>(
+              <Text key={i} style={styles.workoutDetail}>
+                Set {i+1} * {s.rep} reps — {s.weight}
               </Text>
+                ))}
             </View>
             
             
           ))}
-          <Button mode ="contained" onPress={() => navigation.navigate('History')}
-            style={{marginTop:16,marginBottom:20}}
-          >Workout History</Button>
           </>
         </View>
         

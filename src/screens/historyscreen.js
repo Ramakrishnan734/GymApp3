@@ -11,9 +11,11 @@ import {
 } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
+import { useFocusEffect } from '@react-navigation/native';
 const Historyscreen=()=>{
     const [workout,setworkout]=useState([]);
-    useEffect(()=>{
+    useFocusEffect(
+    React.useCallback(()=>{
         const user= auth().currentUser;
         firestore().collection('users')
         .doc(user.uid)
@@ -23,7 +25,8 @@ const Historyscreen=()=>{
             const data=item.docs.map(doc=>doc.data());
             setworkout(data);
         });
-    },[]);
+    },[])
+);
     function handleLogout()
     {
         auth().signOut();
@@ -32,23 +35,24 @@ const Historyscreen=()=>{
         <>
         <View style={ {flex:1 ,backgroundColor: '#0000FF', paddingHorizontal: 24, paddingTop: 20}}>
             <View style={styles.heading}>
-                            <Text style={styles.greeting}>Workout's History </Text>
-                            <TouchableOpacity style={styles.button} onPress={handleLogout}>
-                                <Text style={styles.buttonText}>LOG OUT</Text>
-                            </TouchableOpacity>
-                        </View>
+                <Text style={styles.greeting}>Workout's History </Text>            
             </View>
+    
         <FlatList style={styles.container}
             data={workout}
             keyExtractor ={(item,index)=>index.toString()}
             renderItem={({item})=>(
-                <View style={styles.form}>
-                <Text style={styles.workoutDetail}>
-                     {item.exercise} - {item.set} set * {item.rep} rep    {item.weight} | {item.date}
-                </Text>
-                </View>
+            <View style={styles.form}>
+                <Text style={styles.workoutDetail}>{item.exercise} | {item.date}</Text>
+                {item.setdetail && item.setdetail.map((s,i)=>(
+                    <Text key={i} style={styles.workoutDetail}>
+                        Set {i+1}: {s.rep} reps — {s.weight ? `${s.weight} kg` : 'Bodyweight'}
+                    </Text>
+        ))}
+    </View>
             )}
        />
+       </View>
        </>
 
     );
@@ -62,7 +66,6 @@ const styles=StyleSheet.create({
     },
      heading: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 20,
     },
