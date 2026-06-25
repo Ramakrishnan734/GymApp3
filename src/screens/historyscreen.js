@@ -25,7 +25,7 @@ const Historyscreen=()=>{
       .collection('workout')
       .get()
       .then(item => {
-        const data = item.docs.map(doc => doc.data());
+        const data = item.docs.map(doc => ({ ...doc.data(), id: doc.id }));
 
         const grouped = {};
         data.forEach(w => {
@@ -42,6 +42,39 @@ const Historyscreen=()=>{
       });
   }, [])
 );
+    async function handleCancelWorkout(id)
+    {
+        console.log('item id:', id);
+        if(!id)
+        {
+            Alert.alert('error',' id not found ');
+            return;
+        }
+        const user=auth().currentUser;
+        await firestore()
+        .collection('users').doc(user.uid).collection('workout').doc(id).delete();
+        const snapshot = await firestore()
+    .collection('users')
+    .doc(user.uid)
+    .collection('workout')
+    .get();
+
+  const data = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+console.log('first item id:', data[0]?.id);
+
+  const grouped = {};
+  data.forEach(w => {
+    const date = w.date || 'No Date';
+    if (!grouped[date]) grouped[date] = [];
+    grouped[date].push(w);
+  });
+
+  const sections = Object.keys(grouped)
+    .sort((a, b) => new Date(b) - new Date(a))
+    .map(date => ({ title: date, data: grouped[date] }));
+
+  setworkout(sections);
+    }
     function handleLogout()
     {
         auth().signOut();
@@ -70,6 +103,9 @@ const Historyscreen=()=>{
           Set {i + 1}: {s.rep} reps — {s.weight ? `${s.weight} kg` : 'Bodyweight'}
         </Text>
       ))}
+      <TouchableOpacity onPress={() => handleCancelWorkout(item.id)}>
+      <Text style={{ color: 'red', marginTop: 8 }}>Delete</Text>
+        </TouchableOpacity>
     </View>
   )}
 />
