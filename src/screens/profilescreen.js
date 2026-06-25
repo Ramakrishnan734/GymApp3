@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  Image,
 } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
@@ -42,6 +43,10 @@ import auth from '@react-native-firebase/auth';
                 <Text style={styles.workoutDetail}>USERNAME :{username}</Text>
                 <Text style={styles.workoutDetail}>EMAIL :{useremail}</Text>
             </View>
+            <Image 
+            source={require('../../assets/icon.png')} 
+             style={{ width: 300, height: 300, marginTop: 20 }}
+            />
         </View>
         </View>
         </>

@@ -1,4 +1,4 @@
-import{Alert, Button, StyleSheet, View,TextInput,TouchableOpacity,Text} from 'react-native';
+import{Alert, Button, StyleSheet, View,TextInput,TouchableOpacity,Text,Image} from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import {useState} from 'react';
 import { getAuth, signInWithEmailAndPassword } from '@react-native-firebase/auth';
@@ -30,8 +30,12 @@ return (
     <SafeAreaView style= {styles.container}>
         {/*header */}
         <View style={styles.heading}>
-            <Text style={styles.appname}>GYMAPP</Text>
-            <Text style={styles.slogan}>Track your progress</Text>
+            <Image 
+                        source={require('../../assets/icon.png')} 
+                         style={{ width: 300, height: 200 }}
+                        />
+            <Text style={styles.appname}>REP TRACK</Text>
+            <Text style={styles.slogan}>Every Rep Every Win</Text>
         </View>
         {/* form */}
         <View style={styles.form}>
@@ -78,11 +82,11 @@ const styles= StyleSheet.create({
     appname:{
         fontSize:40,
         fontWeight:'bold',
-        color:'#008B8B',
+        color:'#00FF7F',
     },
     slogan:{
         fontSize:20,
-        color:'#FFD700',
+        color:'#FF0000',
     },
     // FORM 
     form:{

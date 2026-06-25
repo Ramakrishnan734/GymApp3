@@ -9,7 +9,7 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
+import { TextInput, Button,Menu } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 
 const HomeScreen= ({navigation})=>{
@@ -19,10 +19,13 @@ const HomeScreen= ({navigation})=>{
     const [rep,setrep]=useState("");
     const [weight,setweight]=useState("");
     const [detail,setdetail]=useState([]);
+    const [musclegrp,setmusclegrp]=useState("");
+    const [menuvisible,setmenuvisible]=useState(false);  
     useEffect(()=>{
         const user= auth().currentUser;
         firestore().collection('users').doc(user.uid).collection('workout').get().then(item=>{
-            const data=item.docs.map(doc=>doc.data());
+            const today = new Date().toLocaleDateString();
+            const data=item.docs.map(doc=>doc.data()).filter(w => w.date === today);
             setworkout(data);
         });
     },[]);
@@ -38,6 +41,7 @@ const HomeScreen= ({navigation})=>{
         exercise,
         setdetail:detail,
         set:parseInt(set),
+        musclegrp,
        date: new Date().toLocaleDateString(),
     }
     const user =auth().currentUser;
@@ -50,6 +54,8 @@ const HomeScreen= ({navigation})=>{
     setset("");
     setrep("");
     setweight("");
+    setdetail([]);
+    setmusclegrp("");
     }
     function handleSetChange(value)
     {
@@ -69,7 +75,6 @@ const HomeScreen= ({navigation})=>{
     {
         auth().signOut();
     }
-    const streak= 7;
     const totalset=workout.reduce((sum,w)=> sum+(w.set || 0),0);
     return(
 
@@ -77,15 +82,9 @@ const HomeScreen= ({navigation})=>{
             <View style={styles.heading}>
                 <Text style={styles.greeting}>Today's workout</Text>
             </View>
-        
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
-           
             {/* stats */}
             <View style={styles.statrow}>
-                <View style={styles.statcard}>
-                    <Text style={styles.statvalue}>{streak}</Text>
-                    <Text style={styles.statlabel}>Days Streak</Text>
-                </View>
                 <View style={styles.statcard}>
                     <Text style={styles.statvalue}>{workout.length}</Text>
                     <Text style={styles.statlabel}>Workouts</Text>
@@ -98,6 +97,27 @@ const HomeScreen= ({navigation})=>{
                 {/* log workout */}
                 <View style={styles.logcard}>
                     <Text style={styles.title}> LOG EXCERCISE</Text>
+                    <Menu 
+                        visible={menuvisible}
+                        onDismiss={()=>setmenuvisible(false)}
+                        anchor={
+                            <Button onPress ={()=>setmenuvisible(true)}>
+                                {musclegrp || 'select muscle group'}
+                            </Button>
+                        }
+                        >
+                    <Menu.Item onPress={() => { setmusclegrp('Upper Chest'); setmenuvisible(false); }} title="Upper Chest" />
+                    <Menu.Item onPress={() => { setmusclegrp('Mid Chest'); setmenuvisible(false); }} title="Mid Chest" />
+                    <Menu.Item onPress={() => { setmusclegrp('Lower Chest'); setmenuvisible(false); }} title="Lower Chest" />
+                    <Menu.Item onPress={() => { setmusclegrp('Back'); setmenuvisible(false); }} title="Back" />
+                    <Menu.Item onPress={() => { setmusclegrp('Legs'); setmenuvisible(false); }} title="Legs" />
+                    <Menu.Item onPress={() => { setmusclegrp('Front Delt'); setmenuvisible(false); }} title="Front Delt" />
+                    <Menu.Item onPress={() => { setmusclegrp('Side Delt'); setmenuvisible(false); }} title="Side Delt" />
+                    <Menu.Item onPress={() => { setmusclegrp('Rear Delt'); setmenuvisible(false); }} title="Rear Delt" />
+                    <Menu.Item onPress={() => { setmusclegrp('Biceps'); setmenuvisible(false); }} title="Biceps" />
+                    <Menu.Item onPress={() => { setmusclegrp('Triceps'); setmenuvisible(false); }} title="Triceps" />
+                    <Menu.Item onPress={() => { setmusclegrp('Core'); setmenuvisible(false); }} title="Core" />
+                    </Menu>
                     <TextInput 
                         style={styles.input}
                         label=" EXCERCISE NAME"

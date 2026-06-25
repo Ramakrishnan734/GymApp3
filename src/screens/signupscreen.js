@@ -1,4 +1,4 @@
-import{Alert, Button, StyleSheet, View,TextInput,TouchableOpacity,Text} from 'react-native';
+import{Alert, Button, StyleSheet, View,TextInput,TouchableOpacity,Text,Image} from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import {useState} from 'react';
 import { getAuth, createUserWithEmailAndPassword } from '@react-native-firebase/auth';
@@ -35,8 +35,12 @@ export default function Signup({navigation}){
         <SafeAreaView style={styles.container}>
             {/*header*/}
             <View style={styles.heading}>
-                <Text style={styles.appname}>GYMAPP</Text>
-                <Text style={styles.slogan}> Track your Progress</Text>
+                <Image 
+                        source={require('../../assets/icon.png')} 
+                         style={{ width: 300, height: 200}}
+                        />
+                <Text style={styles.appname}>REP TRACK</Text>
+                <Text style={styles.slogan}> Every Rep Every Win</Text>
             </View>
             {/*form*/}
             <View style={styles.form}>
