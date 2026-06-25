@@ -101,7 +101,7 @@ const HomeScreen= ({navigation})=>{
                         visible={menuvisible}
                         onDismiss={()=>setmenuvisible(false)}
                         anchor={
-                            <Button onPress ={()=>setmenuvisible(true)}>
+                            <Button mode='contained' onPress ={()=>setmenuvisible(true)}>
                                 {musclegrp || 'select muscle group'}
                             </Button>
                         }
@@ -167,8 +167,7 @@ const HomeScreen= ({navigation})=>{
             </Button>
                 </View>
                 {/* */}
-             {workout.length > 0 && (
-              
+             {workout.length > 0 && (      
         <View style={styles.listSection}>
             <>
           <Text style={styles.title}>Logged Today</Text>
@@ -181,8 +180,6 @@ const HomeScreen= ({navigation})=>{
               </Text>
                 ))}
             </View>
-            
-            
           ))}
           </>
         </View>

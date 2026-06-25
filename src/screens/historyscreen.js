@@ -46,51 +46,13 @@ const Historyscreen=()=>{
     {
         auth().signOut();
     }
-    const chartdata = () => {
-  const grouped = {};
-  workout.forEach(w => {
-    if (w.date) {
-      grouped[w.date] = (grouped[w.date] || 0) + w.set;
-    }
-  });
-  const labels = Object.keys(grouped).slice(-5);
-  const data = labels.map(d => grouped[d]);
-  return { labels, data };
-};
-const allworkouts = workout.flatMap(section => section.data);
-const volumeByMuscle = () => {
-    const grouped = {};
-    allworkouts.forEach(w => {
-        if (w.musclegrp) {
-            grouped[w.musclegrp] = (grouped[w.musclegrp] || 0) + (w.set || 0);
-        }
-    });
-    return grouped;
-};
     return(
         <>
         <View style={ {flex:1 ,backgroundColor: '#0000ff', paddingHorizontal: 24, paddingTop: 20}}>
             <View style={styles.heading}>
                 <Text style={styles.greeting}>Workout's History </Text>            
             </View>
-            {allworkouts.length > 0 && (
-  <BarChart
-    data={{
-      labels: Object.keys(volumeByMuscle()),
-      datasets: [{ data: Object.values(volumeByMuscle()) }]
-    }}
-    width={Dimensions.get('window').width - 48}
-    height={220}
-    chartConfig={{
-      backgroundColor: '#0000ff',
-      backgroundGradientFrom: '#000000',
-      backgroundGradientTo: '#0000ff',
-      color: (opacity = 1) => `rgba(255, 215, 0, ${opacity})`,
-      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    }}
-    style={{ borderRadius: 16, marginBottom: 16 }}
-  />
-)}
+
         <SectionList
   style={styles.container}
   sections={workout}
