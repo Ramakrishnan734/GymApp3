@@ -11,13 +11,14 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState('');
  async  function handleLogin() {
     try{
-        const value=await firestore().collection('users').where('username','==',username).get();
-        if (value.empty)
+        const value=await firestore().collection('usernames').doc(username).get();
+        if (!value.exists)
         {
             Alert.alert("Error","Username not found");
             return;
         }
-        const email=value.docs[0].data().email;
+        console.log('doc data:', value.data());
+        const email=value.data().email;
         await signInWithEmailAndPassword(getAuth(),email,password);
         Alert.alert("Success","Logged in");
     }

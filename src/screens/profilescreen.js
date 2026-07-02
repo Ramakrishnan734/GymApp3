@@ -19,8 +19,8 @@ import auth from '@react-native-firebase/auth';
    const [username,setusername]=useState('');
    useEffect(()=>{
     const fetch=async ()=>{
-        const snapshot=await firestore().collection('users').where('uid',"==",useruid).get();
-        setusername(snapshot.docs[0].data().username);
+        const snapshot=await firestore().collection('users').doc(userid).get();
+        setusername(snapshot.data().username);
     };
     fetch();
    },[]);

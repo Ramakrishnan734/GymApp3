@@ -24,6 +24,9 @@ export default function Signup({navigation}){
             email,
             uid
         });  
+        await firestore().collection('usersnames').doc(username).set({email});
+        console.log('email at signup:', email);
+console.log('username at signup:', username);
         Alert.alert("Success","Account created");
        }
        catch(error)

@@ -9,6 +9,7 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { TextInput, Button,Menu } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 
@@ -21,14 +22,16 @@ const HomeScreen= ({navigation})=>{
     const [detail,setdetail]=useState([]);
     const [musclegrp,setmusclegrp]=useState("");
     const [menuvisible,setmenuvisible]=useState(false);  
-    useEffect(()=>{
-        const user= auth().currentUser;
-        firestore().collection('users').doc(user.uid).collection('workout').get().then(item=>{
-            const today = new Date().toLocaleDateString();
-            const data=item.docs.map(doc=>doc.data()).filter(w => w.date === today);
+    useFocusEffect(
+    React.useCallback(() => {
+        const user = auth().currentUser;
+        const today = new Date().toLocaleDateString();
+        firestore().collection('users').doc(user.uid).collection('workout').get().then(item => {
+            const data = item.docs.map(doc => ({ ...doc.data(), id: doc.id })).filter(w => w.date === today);
             setworkout(data);
         });
-    },[]);
+    }, [])
+);
   async  function handleLogworkout()
     {
         if(!exercise || !set || setdetail.length ===0 )
