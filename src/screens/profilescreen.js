@@ -19,7 +19,7 @@ import auth from '@react-native-firebase/auth';
    const [username,setusername]=useState('');
    useEffect(()=>{
     const fetch=async ()=>{
-        const snapshot=await firestore().collection('users').doc(userid).get();
+        const snapshot=await firestore().collection('users').doc(useruid).get();
         setusername(snapshot.data().username);
     };
     fetch();
@@ -30,7 +30,7 @@ import auth from '@react-native-firebase/auth';
    }
    return (
         <>
-        <View style={ {flex:1 ,backgroundColor: '#0000FF', paddingHorizontal: 24, paddingTop: 20}}>
+       <View style={ {flex:1 ,backgroundColor: '#121212', paddingHorizontal: 24, paddingTop: 20}}>
                     <View style={styles.heading}>
                                     <Text style={styles.greeting}>Profile </Text>
                                     <TouchableOpacity style={styles.button} onPress={handleLogout}>
@@ -44,7 +44,7 @@ import auth from '@react-native-firebase/auth';
                 <Text style={styles.workoutDetail}>EMAIL :{useremail}</Text>
             </View>
             <Image 
-            source={require('../../assets/icon.png')} 
+            source={require('../../assets/icon copy.png')} 
              style={{ width: 300, height: 300, marginTop: 20 }}
             />
         </View>
@@ -57,10 +57,10 @@ const styles=StyleSheet.create({
     container:{
         paddingBottom: 40,
         paddingHorizontal: 24,
-        backgroundColor:'#0000FF',
+        backgroundColor:'#121212',
     },
     form:{
-        backgroundColor:'#FFFAFA',
+        backgroundColor:'#1E1E1E',
         borderRadius:16,
         padding:30,
     },
@@ -72,21 +72,21 @@ const styles=StyleSheet.create({
     },
     greeting:{
         fontSize:20,
-        color:'#FFD700',
+        color:'#FF4500',
     },
     button:{
-        backgroundColor:'#FF6347',
+        backgroundColor:'#FF4500',
         alignItems:'center',
         borderRadius:10,
         padding: 15,
         marginTop:20
     },
     buttonText:{
-        color:'#000000',
+        color:'#FFFFFF',
     } ,
     workoutDetail: {
     fontSize: 13,
-    color: '#000',
+    color: '#FFFFFF',
     marginTop:1,
     }
 });

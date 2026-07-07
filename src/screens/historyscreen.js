@@ -81,7 +81,7 @@ console.log('first item id:', data[0]?.id);
     }
     return(
         <>
-        <View style={ {flex:1 ,backgroundColor: '#0000ff', paddingHorizontal: 24, paddingTop: 20}}>
+        <View style={ {flex:1 ,backgroundColor: '#121212', paddingHorizontal: 24, paddingTop: 20}}>
             <View style={styles.heading}>
                 <Text style={styles.greeting}>Workout's History </Text>            
             </View>
@@ -91,7 +91,7 @@ console.log('first item id:', data[0]?.id);
   sections={workout}
   keyExtractor={(item, index) => index.toString()}
   renderSectionHeader={({ section: { title } }) => (
-    <Text style={{ color: '#FFD700', fontSize: 16, fontWeight: 'bold', marginTop: 10 }}>
+    <Text style={{ color: '#FF4500', fontSize: 16, fontWeight: 'bold', marginTop: 10 }}>
       {title}
     </Text>
   )}
@@ -119,7 +119,7 @@ const styles=StyleSheet.create({
     container:{
         paddingBottom: 40,
         paddingHorizontal: 24,
-        backgroundColor:'#0000ff',
+        backgroundColor:'#121212',
     },
      heading: {
     flexDirection: 'row',
@@ -128,20 +128,20 @@ const styles=StyleSheet.create({
     },
     greeting:{
         fontSize:20,
-        color:'#FFD700',
+        color:'#FF4500',
     },
     button:{
-        backgroundColor:'#FF6347',
+        backgroundColor:'#FF4500',
         alignItems:'center',
         borderRadius:10,
         padding: 15,
         marginTop:20
     },
     buttonText:{
-        color:'#000000',
+        color:'#FFFFFF',
     } ,
     form:{
-        backgroundColor:'#fff',
+        backgroundColor:'#1E1E1E',
         borderRadius:16,
         padding:30,
         marginBottom:20,marginTop:10
@@ -149,7 +149,7 @@ const styles=StyleSheet.create({
     },
     workoutDetail: {
     fontSize: 13,
-    color: '#000',
+    color: '#FFFFFF',
     marginTop:1,
   },
 

@@ -81,7 +81,7 @@ const HomeScreen= ({navigation})=>{
     const totalset=workout.reduce((sum,w)=> sum+(w.set || 0),0);
     return(
 
-         <View style={{ flex:1 ,backgroundColor: '#0000FF', paddingHorizontal: 24, paddingTop: 20 }}>
+         <View style={{ flex:1 ,backgroundColor: '#121212', paddingHorizontal: 24, paddingTop: 20 }}>
             <View style={styles.heading}>
                 <Text style={styles.greeting}>Today's workout</Text>
             </View>
@@ -104,9 +104,16 @@ const HomeScreen= ({navigation})=>{
                         visible={menuvisible}
                         onDismiss={()=>setmenuvisible(false)}
                         anchor={
-                            <Button mode='contained' onPress ={()=>setmenuvisible(true)}>
-                                {musclegrp || 'select muscle group'}
-                            </Button>
+                            <Button 
+                            mode='contained' 
+                            buttonColor="#FF4500"
+                            textColor="#FFFFFF"
+                            padding={10}
+                            style={{marginBottom:10}}
+                            onPress={()=>setmenuvisible(true)}
+                        >
+                            {musclegrp || 'select muscle group'}
+                        </Button>
                         }
                         >
                     <Menu.Item onPress={() => { setmusclegrp('Upper Chest'); setmenuvisible(false); }} title="Upper Chest" />
@@ -165,7 +172,7 @@ const HomeScreen= ({navigation})=>{
                         </View>
                     ))}
                     </View>
-                    <Button  style={styles.Button} onPress={handleLogworkout}>
+                    <Button textColor="#FF4500"  style={styles.Button} onPress={handleLogworkout}>
                 ADD EXERCISE
             </Button>
                 </View>
@@ -179,7 +186,7 @@ const HomeScreen= ({navigation})=>{
               <Text style={styles.workoutName}>{item.exercise}</Text>
               {item.setdetail && item.setdetail.map((s,i)=>(
               <Text key={i} style={styles.workoutDetail}>
-                Set {i+1} * {s.rep} reps — {s.weight}
+                Set {i+1}   {s.rep} reps   *  {s.weight} kg
               </Text>
                 ))}
             </View>
@@ -200,7 +207,7 @@ const styles=StyleSheet.create({
    container:{
         paddingBottom: 40,
         paddingHorizontal: 24,
-        backgroundColor:'#0000FF',
+        backgroundColor:'#121212',
     },
      heading: {
     flexDirection: 'row',
@@ -210,12 +217,12 @@ const styles=StyleSheet.create({
 },
      // FORM 
     form:{
-        backgroundColor:'#778899',
+        backgroundColor:'#232323',
         borderRadius:16,
         padding:30,
     },
     label:{
-        color:'#000000',
+        color:'#FFFFFF',
         fontSize:15,
 
     },
@@ -224,26 +231,29 @@ const styles=StyleSheet.create({
         backgroundColor:'#FFFFFF',
         borderRadius: 8,
         fontSize:15,
+        marginTop:20,
 
     },
     appname:{
         fontSize:40,
-        fontWeight:'bold',
-        color:'#008B8B',
+        fontWeight:'900',
+        color:'#FF4500',
     },
     greeting:{
         fontSize:20,
-        color:'#FFD700',
+        fontWeight:'700',
+        color:'#FF4500',
     },
     button:{
-        backgroundColor:'#FF6347',
+        backgroundColor:'#FF4500',
         alignItems:'center',
         borderRadius:10,
         padding: 15,
         marginTop:20
     },
     buttonText:{
-        color:'#000000',
+        color:'#FFFFFF',
+        fontWeight:'700',
         
     } ,
     statrow: {
@@ -253,7 +263,7 @@ const styles=StyleSheet.create({
   },
   statcard: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#1E1E1E',
     borderRadius: 12,
     padding: 14,
     alignItems: 'center',
@@ -261,44 +271,44 @@ const styles=StyleSheet.create({
     elevation: 1,
   },
   statvalue: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#1A1A1A',
+    fontSize: 22,
+    fontWeight: '900',
+    color: '#FF4500',
   },
   statlabel: {
     fontSize: 11,
-    color: '#888',
+    color: '#B0B0B0',
     marginTop: 2,
   },
    logcard: {
-    backgroundColor: '#fff',
+    backgroundColor: '#1E1E1E',
     borderRadius: 16,
     padding: 16,
     marginBottom: 20,
   },
   title: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#1A1A1A',
+    fontWeight: '700',
+    color: '#FFFFFF',
     marginBottom: 12,
   },
   listSection: {
     marginBottom: 40,
   },
   workoutItem: {
-    backgroundColor: '#fff',
+    backgroundColor: '#1E1E1E',
     borderRadius: 12,
     padding: 14,
     marginBottom:10,
   },
   workoutName: {
     fontSize: 15,
-    fontWeight: '600',
-    color: '#1A1A1A',
+    fontWeight: '700',
+    color: '#FFFFFF',
   },
   workoutDetail: {
     fontSize: 13,
-    color: '#666',
+    color: '#B0B0B0',
     marginTop:1,
   },
 

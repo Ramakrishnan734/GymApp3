@@ -5,7 +5,6 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "plugins": [
-  "@react-native-google-signin/google-signin",
   "@react-native-firebase/app",
   "@react-native-firebase/auth"
     ],
@@ -13,7 +12,7 @@
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/icon.png",
+      "image": "./assets/icon copy.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -23,14 +22,14 @@
     "android": {
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
+        "foregroundImage": "./assets/icon copy.png",
         "backgroundColor": "#1E90FF"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.gymapp"
     },
     "web": {
-      "favicon": "./assets/icon.png"
+      "favicon": "./assets/icon copy.png"
     }
   }
 }

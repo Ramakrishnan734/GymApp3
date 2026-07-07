@@ -1,3 +1,4 @@
+
 import{Alert, Button, StyleSheet, View,TextInput,TouchableOpacity,Text,Image} from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import {useState} from 'react';
@@ -9,31 +10,45 @@ import firestore from '@react-native-firebase/firestore';
 export default function LoginScreen({ navigation }) {
   const [username, setusername] = useState('');
   const [password, setPassword] = useState('');
- async  function handleLogin() {
-    try{
-        const value=await firestore().collection('usernames').doc(username).get();
-        if (!value.exists)
-        {
-            Alert.alert("Error","Username not found");
-            return;
-        }
-        console.log('doc data:', value.data());
-        const email=value.data().email;
-        await signInWithEmailAndPassword(getAuth(),email,password);
-        Alert.alert("Success","Logged in");
-    }
-    catch(error)
-    {
-        Alert.alert("Error",error.message);
-    }
+async function handleLogin() {
+  try {
+    console.log("Login button pressed");
+    const value = await firestore()
+  .collection("usersnames")
+  .doc(username)
+  .get();
+
+if (!value.exists()) { 
+    Alert.alert("Error", "Username not found");
+    return;
+}
+
+const email = value.data().email;
+
+await signInWithEmailAndPassword(
+    getAuth(),
+    email,
+    password
+);
+
+Alert.alert("Success", "Logged in");
+
+    
+
+    Alert.alert("Success", "Logged in");
+
+  } catch (error) {
+    console.log(error);
+    Alert.alert("Error", error.message);
+  }
 }
 return (
     <SafeAreaView style= {styles.container}>
         {/*header */}
         <View style={styles.heading}>
             <Image 
-                        source={require('../../assets/icon.png')} 
-                         style={{ width: 300, height: 200 }}
+                        source={require('../../assets/icon copy.png')} 
+                         style={{ width: 210, height: 140}}
                         />
             <Text style={styles.appname}>REP TRACK</Text>
             <Text style={styles.slogan}>Every Rep Every Win</Text>
@@ -74,7 +89,7 @@ const styles= StyleSheet.create({
         flex:1,
         justifyContent:'center',
         paddingHorizontal: 24,
-        backgroundColor:'#0000FF',
+        backgroundColor:'#121212',
     },
     //  HEADER 
     heading:{
@@ -83,20 +98,22 @@ const styles= StyleSheet.create({
     appname:{
         fontSize:40,
         fontWeight:'bold',
-        color:'#00FF7F',
+        color:'#FF4500',
     },
     slogan:{
         fontSize:20,
-        color:'#FF0000',
+        color:'#B0B0B0',
+        paddingBottom: 10,
     },
     // FORM 
     form:{
-        backgroundColor:'#778899',
+        backgroundColor:'#1E1E1E',
         borderRadius:16,
         padding:30,
+        paddingTop: 20,
     },
     label:{
-        color:'#000000',
+        color:'#FFFFFF',
         fontSize:15,
 
     },
@@ -109,17 +126,17 @@ const styles= StyleSheet.create({
     },
     //BUTTON 
     button:{
-        backgroundColor:'#FF6347',
+        backgroundColor:'#FF4500',
         alignItems:'center',
         borderRadius:10,
         padding: 15,
         marginTop:20
     },
     buttonText:{
-        color:'#000000',
+        color:'#FFFFFF',
     },
     linkText:{
-         color: '#FFD700',
+         color: '#FF4500',
   textAlign: 'center',
   marginTop: 16,
   fontSize: 14,

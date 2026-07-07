@@ -8,7 +8,7 @@ export default function Signup({navigation}){
     const [username, setusername] = useState("");
     const [email,setemail]= useState("");
     const [password,setpassword]=useState("");
-    const [confirm,setconfirm]=useState(""); {/*  confirm password */}
+    const [confirm,setconfirm]=useState(""); 
   async function handlesignup()
     {
        if(password!==confirm)
@@ -40,7 +40,7 @@ console.log('username at signup:', username);
             <View style={styles.heading}>
                 <Image 
                         source={require('../../assets/icon.png')} 
-                         style={{ width: 300, height: 200}}
+                         style={{ width: 210, height: 140}}
                         />
                 <Text style={styles.appname}>REP TRACK</Text>
                 <Text style={styles.slogan}> Every Rep Every Win</Text>
